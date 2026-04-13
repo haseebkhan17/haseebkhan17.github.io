@@ -1,118 +1,910 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The AI Architect</title>
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0d0d0d, #2a2a2a);
-            color: white;
-            margin: 0;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
-        .glassmorphism {
-            backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        }
-        .profile-section {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .featured-systems {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        .system-card {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 10px;
-            position: relative;
-            transition: transform 0.3s;
-        }
-        .system-card:hover {
-            transform: translateY(-5px);
-        }
-        .status-dot {
-            width: 10px;
-            height: 10px;
-            background-color: #00FF00;
-            border-radius: 50%;
-            position: absolute;
-            top: 10px;
-            right: 10px;
-        }
-        .deploy-btn {
-            background-color: #00BFFF;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .deploy-btn:hover {
-            background-color: #0099CC;
-        }
-        .live-log {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 10px;
-            border-top: 1px solid rgba(255, 255, 255, 0.3);
-        }
-    </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The AI Architect</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --mint: #98FF98;
+    --mint-dim: rgba(152,255,152,0.15);
+    --mint-glow: rgba(152,255,152,0.4);
+    --blue: #00BFFF;
+    --blue-dim: rgba(0,191,255,0.15);
+    --blue-glow: rgba(0,191,255,0.4);
+    --purple: #A855F7;
+    --purple-dim: rgba(168,85,247,0.15);
+    --bg: #060a12;
+    --bg-2: #0a0f1e;
+    --glass: rgba(255,255,255,0.04);
+    --glass-border: rgba(255,255,255,0.08);
+    --glass-hover: rgba(255,255,255,0.07);
+    --text: #e8edf5;
+    --text-dim: rgba(232,237,245,0.5);
+    --text-mute: rgba(232,237,245,0.25);
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Space Grotesk', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* ─── BACKGROUND ──────────────────────────────────────── */
+  .bg-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .bg-canvas::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 15% 10%, rgba(0,191,255,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 85% 20%, rgba(152,255,152,0.08) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 70% at 50% 90%, rgba(168,85,247,0.1) 0%, transparent 55%),
+      radial-gradient(ellipse 40% 40% at 80% 75%, rgba(0,191,255,0.07) 0%, transparent 50%),
+      linear-gradient(160deg, #060a12 0%, #080d1a 50%, #060a12 100%);
+  }
+
+  .bg-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,191,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,191,255,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, black 30%, transparent 80%);
+  }
+
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    animation: drift 20s ease-in-out infinite;
+  }
+  .orb-1 {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(0,191,255,0.12), transparent 70%);
+    top: -150px; left: -100px;
+    animation-delay: 0s;
+  }
+  .orb-2 {
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(152,255,152,0.1), transparent 70%);
+    top: 10%; right: -80px;
+    animation-delay: -7s;
+  }
+  .orb-3 {
+    width: 600px; height: 350px;
+    background: radial-gradient(circle, rgba(168,85,247,0.08), transparent 70%);
+    bottom: 10%; left: 20%;
+    animation-delay: -14s;
+  }
+
+  @keyframes drift {
+    0%, 100% { transform: translate(0,0) scale(1); }
+    33% { transform: translate(30px, 40px) scale(1.05); }
+    66% { transform: translate(-20px, 20px) scale(0.97); }
+  }
+
+  .scanlines {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(0,0,0,0.06) 3px,
+      rgba(0,0,0,0.06) 4px
+    );
+    pointer-events: none;
+  }
+
+  /* ─── LAYOUT ──────────────────────────────────────────── */
+  .wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px 120px;
+  }
+
+  /* ─── TOP BAR ─────────────────────────────────────────── */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 60px;
+    padding: 12px 20px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    animation: fadeDown 0.6s ease both;
+  }
+
+  .topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .topbar-dot {
+    width: 8px; height: 8px;
+    background: var(--mint);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--mint-glow);
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+
+  .topbar-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--mint);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .topbar-right {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-mute);
+    letter-spacing: 0.1em;
+  }
+
+  .topbar-sys {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.06em;
+  }
+
+  /* ─── PROFILE ─────────────────────────────────────────── */
+  .profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 72px;
+    animation: fadeUp 0.8s ease 0.1s both;
+  }
+
+  .avatar-wrap {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    margin-bottom: 28px;
+  }
+
+  .avatar-ring {
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: conic-gradient(
+      var(--blue) 0deg,
+      var(--mint) 120deg,
+      var(--purple) 240deg,
+      var(--blue) 360deg
+    );
+    animation: spin 5s linear infinite;
+    filter: blur(1px);
+  }
+
+  .avatar-ring-inner {
+    position: absolute;
+    inset: 2px;
+    background: var(--bg);
+    border-radius: 50%;
+  }
+
+  .avatar-img {
+    position: absolute;
+    inset: 6px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(0,191,255,0.2), rgba(152,255,152,0.1));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    overflow: hidden;
+  }
+
+  .avatar-initials {
+    background: linear-gradient(135deg, var(--blue), var(--mint));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Add your headshot: replace .avatar-img content with:
+     <img src="YOUR_IMAGE_URL" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"/>
+  */
+
+  .avatar-glow {
+    position: absolute;
+    inset: -15px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,191,255,0.2), transparent 65%);
+    animation: pulse-glow 3s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  .status-badge {
+    position: absolute;
+    bottom: 4px; right: 4px;
+    width: 18px; height: 18px;
+    background: var(--bg);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+  }
+
+  .status-badge-dot {
+    width: 10px; height: 10px;
+    background: var(--mint);
+    border-radius: 50%;
+    box-shadow: 0 0 6px var(--mint-glow);
+    animation: pulse-dot 1.8s ease-in-out infinite;
+  }
+
+  .profile-sys-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--blue);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    opacity: 0.8;
+  }
+
+  .profile-name {
+    font-family: var(--sans);
+    font-size: clamp(30px, 7vw, 46px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, var(--text) 30%, var(--blue) 70%, var(--mint) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .profile-bio {
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--text-dim);
+    line-height: 1.7;
+    max-width: 480px;
+    margin-bottom: 24px;
+  }
+
+  .profile-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 100px;
+    border: 1px solid var(--glass-border);
+    background: var(--glass);
+    backdrop-filter: blur(10px);
+  }
+  .tag-mint { color: var(--mint); border-color: rgba(152,255,152,0.25); background: var(--mint-dim); }
+  .tag-blue { color: var(--blue); border-color: rgba(0,191,255,0.25); background: var(--blue-dim); }
+  .tag-mute { color: var(--text-dim); }
+
+  /* ─── DIVIDER ─────────────────────────────────────────── */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-mute);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(255,255,255,0.08), transparent);
+  }
+
+  .section-num {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-mute);
+    letter-spacing: 0.1em;
+  }
+
+  /* ─── CARDS ───────────────────────────────────────────── */
+  .cards-section {
+    margin-bottom: 60px;
+    animation: fadeUp 0.8s ease 0.3s both;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .card {
+    position: relative;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 32px;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    overflow: hidden;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    cursor: default;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255,255,255,0.14);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+  }
+
+  .card-1::before { background: radial-gradient(ellipse 80% 80% at 50% 0%, rgba(152,255,152,0.07), transparent); }
+  .card-2::before { background: radial-gradient(ellipse 80% 80% at 50% 0%, rgba(0,191,255,0.07), transparent); }
+  .card-3::before { background: radial-gradient(ellipse 80% 80% at 50% 0%, rgba(168,85,247,0.07), transparent); }
+
+  .card-1:hover { box-shadow: 0 24px 60px rgba(0,0,0,0.4), 0 0 30px rgba(152,255,152,0.08); border-color: rgba(152,255,152,0.2); }
+  .card-2:hover { box-shadow: 0 24px 60px rgba(0,0,0,0.4), 0 0 30px rgba(0,191,255,0.1); border-color: rgba(0,191,255,0.2); }
+  .card-3:hover { box-shadow: 0 24px 60px rgba(0,0,0,0.4), 0 0 30px rgba(168,85,247,0.1); border-color: rgba(168,85,247,0.2); }
+
+  .card:hover::before { opacity: 1; }
+
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .card-num {
+    font-family: var(--mono);
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    opacity: 0.07;
+    position: absolute;
+    top: 24px;
+    right: 28px;
+  }
+  .card-1 .card-num { color: var(--mint); }
+  .card-2 .card-num { color: var(--blue); }
+  .card-3 .card-num { color: var(--purple); }
+
+  .card-status {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 100px;
+    padding: 5px 12px;
+  }
+
+  .pulse-dot {
+    width: 6px; height: 6px;
+    background: var(--mint);
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 0 6px var(--mint-glow);
+    animation: pulse-dot 1.8s ease-in-out infinite;
+  }
+
+  .card-status-text {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--mint);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .card-version {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-mute);
+    letter-spacing: 0.08em;
+  }
+
+  .card-title {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+  .card-1 .card-title { color: var(--mint); }
+  .card-2 .card-title { color: var(--blue); }
+  .card-3 .card-title { color: var(--purple); }
+
+  .card-desc {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    margin-bottom: 24px;
+    max-width: 480px;
+  }
+
+  .card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 28px;
+  }
+
+  .meta-chip {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid var(--glass-border);
+    background: rgba(0,0,0,0.2);
+    color: var(--text-dim);
+  }
+  .card-1 .meta-chip { border-color: rgba(152,255,152,0.15); color: rgba(152,255,152,0.7); }
+  .card-2 .meta-chip { border-color: rgba(0,191,255,0.15); color: rgba(0,191,255,0.7); }
+  .card-3 .meta-chip { border-color: rgba(168,85,247,0.15); color: rgba(168,85,247,0.7); }
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .card-line {
+    height: 1px;
+    background: var(--glass-border);
+    margin-bottom: 24px;
+  }
+
+  .deploy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 28px;
+    border-radius: 12px;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .deploy-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0);
+    transition: background 0.2s ease;
+  }
+
+  .deploy-btn:hover::before { background: rgba(255,255,255,0.08); }
+  .deploy-btn:hover { transform: translateY(-2px); }
+  .deploy-btn:active { transform: translateY(0); }
+
+  .btn-mint {
+    background: linear-gradient(135deg, rgba(152,255,152,0.2), rgba(152,255,152,0.1));
+    color: var(--mint);
+    border: 1px solid rgba(152,255,152,0.35);
+    box-shadow: 0 4px 20px rgba(152,255,152,0.12), inset 0 1px 0 rgba(255,255,255,0.06);
+  }
+  .btn-mint:hover { box-shadow: 0 8px 30px rgba(152,255,152,0.25), inset 0 1px 0 rgba(255,255,255,0.1); }
+
+  .btn-blue {
+    background: linear-gradient(135deg, rgba(0,191,255,0.2), rgba(0,191,255,0.1));
+    color: var(--blue);
+    border: 1px solid rgba(0,191,255,0.35);
+    box-shadow: 0 4px 20px rgba(0,191,255,0.12), inset 0 1px 0 rgba(255,255,255,0.06);
+  }
+  .btn-blue:hover { box-shadow: 0 8px 30px rgba(0,191,255,0.25), inset 0 1px 0 rgba(255,255,255,0.1); }
+
+  .btn-purple {
+    background: linear-gradient(135deg, rgba(168,85,247,0.2), rgba(168,85,247,0.1));
+    color: var(--purple);
+    border: 1px solid rgba(168,85,247,0.35);
+    box-shadow: 0 4px 20px rgba(168,85,247,0.12), inset 0 1px 0 rgba(255,255,255,0.06);
+  }
+  .btn-purple:hover { box-shadow: 0 8px 30px rgba(168,85,247,0.25), inset 0 1px 0 rgba(255,255,255,0.1); }
+
+  .btn-arrow {
+    display: inline-block;
+    transition: transform 0.2s ease;
+    font-style: normal;
+  }
+  .deploy-btn:hover .btn-arrow { transform: translateX(4px); }
+
+  /* ─── FOOTER ──────────────────────────────────────────── */
+  .footer-section {
+    animation: fadeUp 0.8s ease 0.5s both;
+  }
+
+  .footer-text {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-mute);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 20px 0;
+  }
+
+  .footer-dots {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 12px;
+  }
+
+  .footer-dot {
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--text-mute);
+  }
+  .footer-dot:nth-child(2) { background: var(--blue); opacity: 0.5; }
+
+  /* ─── TICKER ──────────────────────────────────────────── */
+  .ticker-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(6,10,18,0.92);
+    border-top: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 10px 0;
+    overflow: hidden;
+  }
+
+  .ticker-inner {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+
+  .ticker-label {
+    flex-shrink: 0;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--blue);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 0 20px;
+    border-right: 1px solid var(--glass-border);
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .ticker-live {
+    width: 6px; height: 6px;
+    background: var(--blue);
+    border-radius: 50%;
+    box-shadow: 0 0 6px var(--blue-glow);
+    animation: pulse-dot 1.4s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+
+  .ticker-track {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    animation: ticker-scroll 40s linear infinite;
+    gap: 0;
+  }
+
+  .ticker-item {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.06em;
+    padding: 0 28px;
+    border-right: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .ticker-item .key {
+    color: var(--blue);
+    opacity: 0.8;
+  }
+
+  .ticker-item .val {
+    color: var(--text);
+  }
+
+  @keyframes ticker-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ─── ANIMATIONS ──────────────────────────────────────── */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; box-shadow: 0 0 6px currentColor; }
+    50% { opacity: 0.5; box-shadow: 0 0 2px currentColor; }
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 0.3; transform: scale(1.08); }
+  }
+
+  /* ─── RESPONSIVE ──────────────────────────────────────── */
+  @media (min-width: 620px) {
+    .card-meta { flex-direction: row; }
+  }
+
+  @media (max-width: 500px) {
+    .wrapper { padding: 24px 14px 110px; }
+    .topbar { padding: 10px 14px; }
+    .card { padding: 22px 18px; }
+    .profile-name { font-size: 28px; }
+    .deploy-btn { padding: 11px 20px; font-size: 11px; }
+    .card-num { font-size: 36px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
 </head>
 <body>
-    <div class="glassmorphism profile-section">
-        <h1>The AI Architect</h1>
-        <p>University AI researcher. I build, test, and deploy the tools that actually move the needle. Below are the systems I run daily.</p>
-        <p><strong>AI Research Automation Class of 2026</strong></p>
-    </div>
-    
-    <div class="featured-systems">
-        <div class="system-card glassmorphism">
-            <div class="status-dot"></div>
-            <h2>AI Content Engine</h2>
-            <p>The exact system I use to generate weeks of content in under an hour. Full pipeline from ideation to publish — zero fluff, maximum output.</p>
-            <p>RUNTIME: 247 days<br>OUTPUT: 10x ROI</p>
-            <button class="deploy-btn">Deploy</button>
-        </div>
 
-        <div class="system-card glassmorphism">
-            <div class="status-dot"></div>
-            <h2>Research Accelerator</h2>
-            <p>Compresses 40-hour literature reviews into structured insight reports. Built for students, used by professionals — now accessible to everyone.</p>
-            <p>USERS: 12.4k<br>RATING: 4.9 / 5</p>
-            <button class="deploy-btn">Deploy</button>
-        </div>
+<!-- Background -->
+<div class="bg-canvas">
+  <div class="bg-grid"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div class="scanlines"></div>
+</div>
 
-        <div class="system-card glassmorphism">
-            <div class="status-dot"></div>
-            <h2>Automation Stack Pro</h2>
-            <p>The no-code automation suite I pair with every AI project. Connects 100+ tools, runs autonomously, and scales without hiring a team.</p>
-            <p>UPTIME: 99.98%<br>TASKS: Unlimited</p>
-            <button class="deploy-btn">Deploy</button>
-        </div>
+<!-- Main Wrapper -->
+<div class="wrapper">
+
+  <!-- Top Bar -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <div class="topbar-dot"></div>
+      <span class="topbar-label">ALL SYSTEMS NOMINAL</span>
+    </div>
+    <span class="topbar-sys">// the-ai-architect.sys</span>
+    <span class="topbar-right">v4.6.1</span>
+  </header>
+
+  <!-- Profile -->
+  <section class="profile">
+    <div class="avatar-wrap">
+      <div class="avatar-glow"></div>
+      <div class="avatar-ring"></div>
+      <div class="avatar-ring-inner"></div>
+      <div class="avatar-img">
+        <!-- REPLACE WITH YOUR HEADSHOT:
+             <img src="YOUR_IMAGE_URL" alt="The AI Architect" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"/>
+        -->
+        <span class="avatar-initials">AI</span>
+      </div>
+      <div class="status-badge"><div class="status-badge-dot"></div></div>
     </div>
 
-    <div class="live-log">
-        <p>LIVE LOG:</p>
-        <p>SYSTEM::Optimizing pipeline... | MODEL::GPT-4o loaded | TASK::Batch inference running | LATENCY::84ms avg | MEMORY::3.2 GB allocated | STATUS::All agents nominal...</p>
+    <div class="profile-sys-tag">// Architect Online</div>
+    <h1 class="profile-name">The AI Architect</h1>
+    <p class="profile-bio">University AI researcher. I build, test, and deploy the tools that actually move the needle. Below are the systems I run daily.</p>
+    <div class="profile-tags">
+      <span class="tag tag-mint">AI Research</span>
+      <span class="tag tag-blue">Automation</span>
+      <span class="tag tag-mute">Class of 2026</span>
     </div>
+  </section>
+
+  <!-- Featured Systems -->
+  <section class="cards-section">
+    <div class="section-header">
+      <span class="section-label">Featured Systems</span>
+      <div class="section-line"></div>
+      <span class="section-num">03</span>
+    </div>
+
+    <div class="cards-grid">
+
+      <!-- Card 1 -->
+      <div class="card card-1">
+        <span class="card-num">01</span>
+        <div class="card-top">
+          <div class="card-status">
+            <div class="pulse-dot"></div>
+            <span class="card-status-text">Status: Online</span>
+          </div>
+          <span class="card-version">v4.1 // stable</span>
+        </div>
+        <h2 class="card-title">AI Content Engine</h2>
+        <p class="card-desc">The exact system I use to generate weeks of content in under an hour. Full pipeline from ideation to publish — zero fluff, maximum output.</p>
+        <div class="card-meta">
+          <span class="meta-chip">RUNTIME: 247 days</span>
+          <span class="meta-chip">OUTPUT: 10x ROI</span>
+        </div>
+        <div class="card-line"></div>
+        <div class="card-footer">
+          <a href="#" class="deploy-btn btn-mint">
+            Deploy System <span class="btn-arrow">-&gt;</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card card-2">
+        <span class="card-num">02</span>
+        <div class="card-top">
+          <div class="card-status">
+            <div class="pulse-dot"></div>
+            <span class="card-status-text">Status: Online</span>
+          </div>
+          <span class="card-version">v2.8 // stable</span>
+        </div>
+        <h2 class="card-title">Research Accelerator</h2>
+        <p class="card-desc">Compresses 40-hour literature reviews into structured insight reports. Built for students, used by professionals — now accessible to everyone.</p>
+        <div class="card-meta">
+          <span class="meta-chip">USERS: 12.4k</span>
+          <span class="meta-chip">RATING: 4.9 / 5</span>
+        </div>
+        <div class="card-line"></div>
+        <div class="card-footer">
+          <a href="#" class="deploy-btn btn-blue">
+            Deploy System <span class="btn-arrow">-&gt;</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="card card-3">
+        <span class="card-num">03</span>
+        <div class="card-top">
+          <div class="card-status">
+            <div class="pulse-dot"></div>
+            <span class="card-status-text">Status: Online</span>
+          </div>
+          <span class="card-version">v6.0 // enterprise</span>
+        </div>
+        <h2 class="card-title">Automation Stack Pro</h2>
+        <p class="card-desc">The no-code automation suite I pair with every AI project. Connects 100+ tools, runs autonomously, and scales without hiring a team.</p>
+        <div class="card-meta">
+          <span class="meta-chip">UPTIME: 99.98%</span>
+          <span class="meta-chip">TASKS: Unlimited</span>
+        </div>
+        <div class="card-line"></div>
+        <div class="card-footer">
+          <a href="#" class="deploy-btn btn-purple">
+            Deploy System <span class="btn-arrow">-&gt;</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer-section">
+    <p class="footer-text">Designed by The AI Architect &nbsp;&mdash;&nbsp; 2026 &nbsp;&mdash;&nbsp; All Tools Personally Tested</p>
+    <div class="footer-dots">
+      <div class="footer-dot"></div>
+      <div class="footer-dot"></div>
+      <div class="footer-dot"></div>
+    </div>
+  </footer>
+
+</div>
+
+<!-- Live Log Ticker -->
+<div class="ticker-bar">
+  <div class="ticker-inner">
+    <div class="ticker-label">
+      <div class="ticker-live"></div>
+      LIVE LOG
+    </div>
+    <div class="ticker-track">
+      <span class="ticker-item"><span class="key">SYSTEM::</span><span class="val">Optimizing pipeline...</span></span>
+      <span class="ticker-item"><span class="key">MODEL::</span><span class="val">GPT-4o loaded</span></span>
+      <span class="ticker-item"><span class="key">TASK::</span><span class="val">Batch inference running</span></span>
+      <span class="ticker-item"><span class="key">LATENCY::</span><span class="val">84ms avg</span></span>
+      <span class="ticker-item"><span class="key">MEMORY::</span><span class="val">3.2 GB allocated</span></span>
+      <span class="ticker-item"><span class="key">STATUS::</span><span class="val">All agents nominal</span></span>
+      <span class="ticker-item"><span class="key">QUEUE::</span><span class="val">0 pending jobs</span></span>
+      <span class="ticker-item"><span class="key">NETWORK::</span><span class="val">Uplink stable</span></span>
+      <span class="ticker-item"><span class="key">VEC-DB::</span><span class="val">Index refreshed</span></span>
+      <span class="ticker-item"><span class="key">TOKENS::</span><span class="val">1.2M processed today</span></span>
+      <span class="ticker-item"><span class="key">WORKFLOW::</span><span class="val">Executing node 7/12</span></span>
+      <span class="ticker-item"><span class="key">ARCH::</span><span class="val">Scaling to demand</span></span>
+      <!-- Duplicate for seamless loop -->
+      <span class="ticker-item"><span class="key">SYSTEM::</span><span class="val">Optimizing pipeline...</span></span>
+      <span class="ticker-item"><span class="key">MODEL::</span><span class="val">GPT-4o loaded</span></span>
+      <span class="ticker-item"><span class="key">TASK::</span><span class="val">Batch inference running</span></span>
+      <span class="ticker-item"><span class="key">LATENCY::</span><span class="val">84ms avg</span></span>
+      <span class="ticker-item"><span class="key">MEMORY::</span><span class="val">3.2 GB allocated</span></span>
+      <span class="ticker-item"><span class="key">STATUS::</span><span class="val">All agents nominal</span></span>
+      <span class="ticker-item"><span class="key">QUEUE::</span><span class="val">0 pending jobs</span></span>
+      <span class="ticker-item"><span class="key">NETWORK::</span><span class="val">Uplink stable</span></span>
+      <span class="ticker-item"><span class="key">VEC-DB::</span><span class="val">Index refreshed</span></span>
+      <span class="ticker-item"><span class="key">TOKENS::</span><span class="val">1.2M processed today</span></span>
+      <span class="ticker-item"><span class="key">WORKFLOW::</span><span class="val">Executing node 7/12</span></span>
+      <span class="ticker-item"><span class="key">ARCH::</span><span class="val">Scaling to demand</span></span>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
