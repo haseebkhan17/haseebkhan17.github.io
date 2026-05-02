@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="p:domain_verify" content="4beda6225cae4c435724e5589a33f61e"/>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Agents Explained: Your 24/7 Digital Workforce — The AI Architect</title>
+  <meta name="description" content="AI agents don't just answer questions — they take actions and run tasks autonomously. Here's what they are and how to deploy your first one today."/>
+  <meta name="author" content="The AI Architect"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+<style>
+  :root{--mint:#afffaf;--mint-dim:rgba(175,255,175,0.15);--mint-glow:rgba(175,255,175,0.4);--blue:#00BFFF;--blue-dim:rgba(0,191,255,0.15);--blue-glow:rgba(0,191,255,0.4);--purple:#c084fc;--purple-dim:rgba(192,132,252,0.15);--bg:#060a12;--bg-2:#0a0f1e;--glass:rgba(255,255,255,0.04);--glass-border:rgba(255,255,255,0.08);--text:#e8edf5;--text-dim:rgba(232,237,245,0.5);--text-mute:rgba(232,237,245,0.25);--mono:'JetBrains Mono',monospace;--sans:'Space Grotesk',sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
+  .bg-canvas{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;}
+  .bg-canvas::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 20% 10%,rgba(0,191,255,0.1) 0%,transparent 60%),radial-gradient(ellipse 50% 70% at 80% 80%,rgba(192,132,252,0.07) 0%,transparent 55%),linear-gradient(160deg,#060a12 0%,#080d1a 50%,#060a12 100%);}
+  .bg-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,191,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,191,255,0.02) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 90% 80% at 50% 40%,black 30%,transparent 80%);}
+  .scanlines{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.05) 3px,rgba(0,0,0,0.05) 4px);}
+  .wrapper{position:relative;z-index:1;max-width:780px;margin:0 auto;padding:40px 20px 120px;}
+  .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:50px;padding:12px 20px;background:var(--glass);border:1px solid var(--glass-border);border-radius:14px;backdrop-filter:blur(20px);animation:fadeDown 0.6s ease both;}
+  .topbar-left{display:flex;align-items:center;gap:10px;}
+  .topbar-dot{width:8px;height:8px;background:var(--blue);border-radius:50%;box-shadow:0 0 8px var(--blue-glow);animation:pulse-dot 2s ease-in-out infinite;}
+  .topbar-label{font-family:var(--mono);font-size:11px;color:var(--blue);letter-spacing:0.12em;text-transform:uppercase;}
+  .post-header{margin-bottom:48px;animation:fadeUp 0.8s ease 0.1s both;}
+  .post-tag-row{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+  .post-tag{font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;padding:4px 12px;border-radius:6px;background:var(--blue-dim);color:var(--blue);border:1px solid rgba(0,191,255,0.2);}
+  .post-read-time{font-family:var(--mono);font-size:10px;color:var(--text-mute);letter-spacing:0.08em;}
+  .post-title{font-size:clamp(26px,5vw,40px);font-weight:700;letter-spacing:-0.03em;line-height:1.2;margin-bottom:16px;background:linear-gradient(135deg,var(--text) 40%,var(--blue) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+  .post-subtitle{font-size:16px;color:var(--text-dim);line-height:1.7;max-width:620px;}
+  .post-divider{height:1px;background:var(--glass-border);margin:32px 0;}
+  .post-body{animation:fadeUp 0.8s ease 0.2s both;}
+  .post-body p{font-size:15px;color:var(--text-dim);line-height:1.85;margin-bottom:20px;}
+  .post-body h2{font-size:22px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin:40px 0 14px;}
+  .post-body h3{font-size:16px;font-weight:600;color:var(--text);letter-spacing:-0.01em;margin:28px 0 10px;}
+  .post-body ul,.post-body ol{padding-left:20px;margin-bottom:20px;}
+  .post-body li{font-size:15px;color:var(--text-dim);line-height:1.8;margin-bottom:8px;}
+  .post-body strong{color:var(--text);font-weight:600;}
+  .post-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,191,255,0.3);}
+  .post-body a:hover{border-color:var(--blue);}
+  .callout{background:var(--glass);border:1px solid var(--glass-border);border-left:3px solid var(--blue);border-radius:12px;padding:20px 24px;margin:28px 0;}
+  .callout p{margin:0;font-size:14px;color:var(--text-dim);}
+  .callout strong{color:var(--blue);}
+  .agent-step{background:var(--glass);border:1px solid var(--glass-border);border-radius:14px;padding:20px 24px;margin:12px 0;display:flex;align-items:flex-start;gap:16px;}
+  .step-num{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--blue);opacity:0.4;flex-shrink:0;line-height:1;width:32px;}
+  .step-title{font-weight:600;color:var(--text);margin-bottom:4px;font-size:15px;}
+  .step-desc{font-size:13px;color:var(--text-dim);line-height:1.6;}
+  .post-footer{margin-top:60px;padding-top:32px;border-top:1px solid var(--glass-border);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;}
+  .back-link{font-family:var(--mono);font-size:11px;color:var(--text-dim);text-decoration:none;letter-spacing:0.1em;transition:color 0.2s;}
+  .back-link:hover{color:var(--blue);}
+  .deploy-btn{display:inline-flex;align-items:center;gap:10px;padding:13px 28px;border-radius:12px;font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;transition:transform 0.2s ease,box-shadow 0.2s ease;}
+  .btn-blue{background:linear-gradient(135deg,rgba(0,191,255,0.2),rgba(0,191,255,0.1));color:var(--blue);border:1px solid rgba(0,191,255,0.35);box-shadow:0 4px 20px rgba(0,191,255,0.12);}
+  .btn-blue:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,191,255,0.25);}
+  .ticker-bar{position:fixed;bottom:0;left:0;right:0;z-index:100;background:rgba(6,10,18,0.92);border-top:1px solid var(--glass-border);backdrop-filter:blur(20px);padding:10px 0;overflow:hidden;}
+  .ticker-inner{display:flex;align-items:center;}
+  .ticker-label{flex-shrink:0;font-family:var(--mono);font-size:10px;color:var(--blue);letter-spacing:0.14em;text-transform:uppercase;padding:0 20px;border-right:1px solid var(--glass-border);margin-right:20px;display:flex;align-items:center;gap:8px;}
+  .ticker-live{width:6px;height:6px;background:var(--blue);border-radius:50%;box-shadow:0 0 6px var(--blue-glow);animation:pulse-dot 1.4s ease-in-out infinite;flex-shrink:0;}
+  .ticker-track{display:flex;align-items:center;white-space:nowrap;animation:ticker-scroll 40s linear infinite;}
+  .ticker-item{font-family:var(--mono);font-size:10px;color:var(--text-dim);letter-spacing:0.06em;padding:0 28px;border-right:1px solid rgba(255,255,255,0.05);}
+  .ticker-item .key{color:var(--blue);opacity:0.8;}
+  @keyframes ticker-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+  @keyframes fadeDown{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes pulse-dot{0%,100%{opacity:1;box-shadow:0 0 6px currentColor}50%{opacity:0.5;box-shadow:0 0 2px currentColor}}
+  @media(max-width:500px){.wrapper{padding:24px 14px 110px;}.post-title{font-size:24px;}}
+</style>
+</head>
+<body>
+
+<div class="bg-canvas"><div class="bg-grid"></div><div class="scanlines"></div></div>
+
+<div class="wrapper">
+
+  <header class="topbar">
+    <div class="topbar-left">
+      <div class="topbar-dot"></div>
+      <span class="topbar-label">POST LOADED</span>
+    </div>
+    <div style="display:flex;gap:16px;">
+      <a href="blog.html" style="font-family:var(--mono);font-size:10px;color:var(--text-dim);text-decoration:none;letter-spacing:0.1em;">← BLOG</a>
+      <a href="index.html" style="font-family:var(--mono);font-size:10px;color:var(--text-dim);text-decoration:none;letter-spacing:0.1em;">HOME</a>
+    </div>
+  </header>
+
+  <article>
+    <header class="post-header">
+      <div class="post-tag-row">
+        <span class="post-tag">Agents</span>
+        <span class="post-read-time">6 min read &nbsp;·&nbsp; May 2026</span>
+      </div>
+      <h1 class="post-title">AI Agents Explained: Your 24/7 Digital Workforce</h1>
+      <p class="post-subtitle">AI agents don't just answer questions — they take actions, run tasks, and operate autonomously while you sleep. Here's everything you need to know and how to deploy your first one today.</p>
+      <div class="post-divider"></div>
+    </header>
+
+    <div class="post-body">
+
+      <p>There is a meaningful difference between an AI <em>tool</em> and an AI <em>agent</em>. A tool waits for you to ask it something. An agent goes and does things on your behalf — browsing the web, writing files, sending emails, running code, making decisions — and it keeps going until the task is complete.</p>
+
+      <p>In 2026, agents have gone from an experimental concept to something you can deploy this afternoon with no code and no budget. This post explains exactly what they are, how they work, and the practical ways to use them.</p>
+
+      <h2>What Is an AI Agent, Actually?</h2>
+
+      <p>The simplest definition: an AI agent is a model with <strong>tools and memory</strong>. It can perceive inputs, make decisions, take actions, observe the results of those actions, and loop — all without you being present.</p>
+
+      <p>A standard chatbot takes a question and returns an answer. That's one cycle. An agent runs multiple cycles, each time deciding what to do next based on the previous result, until it achieves a defined goal.</p>
+
+      <div class="callout">
+        <p><strong>Plain English example:</strong> You tell an agent "research the top 10 AI tools for students, write a 500-word summary, and save it as a markdown file." It browses the web, reads pages, synthesises information, writes the summary, and saves the file. You come back and it's done.</p>
+      </div>
+
+      <h2>The Four Components of Every Agent</h2>
+
+      <div class="agent-step">
+        <div class="step-num">01</div>
+        <div>
+          <div class="step-title">Perception — What it can see</div>
+          <div class="step-desc">Text, files, web pages, emails, calendar events, database rows. The agent's inputs. The more data sources it has access to, the more powerful it becomes.</div>
+        </div>
+      </div>
+
+      <div class="agent-step">
+        <div class="step-num">02</div>
+        <div>
+          <div class="step-title">Reasoning — What it decides</div>
+          <div class="step-desc">The underlying model (Claude, GPT-4o, Gemini) decides what action to take next based on its goal, its current context, and the results so far.</div>
+        </div>
+      </div>
+
+      <div class="agent-step">
+        <div class="step-num">03</div>
+        <div>
+          <div class="step-title">Action — What it does</div>
+          <div class="step-desc">Web search, code execution, file read/write, API calls, form submissions, email sending. Actions are what separate agents from chatbots.</div>
+        </div>
+      </div>
+
+      <div class="agent-step">
+        <div class="step-num">04</div>
+        <div>
+          <div class="step-title">Memory — What it remembers</div>
+          <div class="step-desc">Short-term context within a session, plus long-term memory (stored notes, vector databases) that persists across sessions. Memory is what makes agents feel like real assistants.</div>
+        </div>
+      </div>
+
+      <h2>Types of Agents You Can Build Right Now</h2>
+
+      <h3>Research Agent</h3>
+      <p>Give it a topic. It browses the web using Perplexity or a search tool, reads multiple sources, synthesises findings, and produces a structured report. What used to take 3 hours now takes 4 minutes.</p>
+
+      <h3>Content Pipeline Agent</h3>
+      <p>Feed it a keyword. It researches the topic, writes a draft, formats it, suggests a headline and meta description, and saves it ready for publishing. One person with this agent can run a full content operation.</p>
+
+      <h3>Inbox & Scheduling Agent</h3>
+      <p>Connected to your email and calendar, it reads incoming messages, drafts replies, flags priorities, and suggests meeting slots. Available now through tools like Claude with computer use or custom n8n/Zapier workflows.</p>
+
+      <h3>Coding Agent</h3>
+      <p><strong>Cursor</strong> is effectively a coding agent. You describe a feature, it writes the code, runs it, reads the error, fixes it, and tries again. You supervise, you don't write.</p>
+
+      <h2>How to Deploy Your First Agent Today (No Code)</h2>
+
+      <p>The fastest path to a working agent with zero technical setup:</p>
+
+      <ol>
+        <li>Go to <a href="https://claude.ai" target="_blank">claude.ai</a> and create a Project</li>
+        <li>Give it a detailed system prompt describing its role, goals, and how it should behave</li>
+        <li>Enable web search in the tools panel</li>
+        <li>Give it a multi-step task: "Research X, summarise the top 5 findings, then write a 300-word post"</li>
+        <li>Watch it execute each step in sequence</li>
+      </ol>
+
+      <p>This is a basic agent loop. For more sophisticated autonomous agents, look at <strong>n8n</strong> (free, open-source workflow automation) or <strong>Make.com</strong>, where you can build agents that run on schedules and connect to real data sources.</p>
+
+      <div class="callout">
+        <p><strong>The key mental shift:</strong> Stop thinking "what question should I ask AI?" and start thinking "what task should I delegate to AI?" That reframe is the difference between using AI as a tool and using it as a workforce.</p>
+      </div>
+
+      <h2>What Agents Can't Do Yet</h2>
+
+      <p>Agents still need supervision for anything that can't be easily reversed. Sending emails at scale, making purchases, deleting files — treat these with human oversight in the loop. The technology is powerful, and the safety layer is still on you.</p>
+
+      <p>The best workflow: agents handle research, drafting, organisation, and analysis autonomously. You review, approve, and publish. This gives you a 10x output multiplier with none of the catastrophic failure risk.</p>
+
+      <h2>Where This Is Going</h2>
+
+      <p>By the end of 2026, multi-agent systems — where multiple specialised agents collaborate on a single task — will be accessible to anyone. One agent researches. One writes. One edits. One schedules and publishes. You manage the team, you don't do the work.</p>
+
+      <p>The people who understand agents now will be the ones running those systems — and charging others to set them up. That is the real opportunity.</p>
+
+    </div>
+  </article>
+
+  <div class="post-footer">
+    <a href="blog.html" class="back-link">← Back to All Posts</a>
+    <a href="index.html" class="deploy-btn btn-blue">View The Full Stack →</a>
+  </div>
+
+  <p style="font-family:var(--mono);font-size:10px;color:var(--text-mute);margin-top:32px;letter-spacing:0.08em;">
+    Affiliate Disclosure: Some links in this post are affiliate links. I may earn a commission if you sign up — at no cost to you. I only recommend tools I personally use.
+  </p>
+
+</div>
+
+<div class="ticker-bar">
+  <div class="ticker-inner">
+    <div class="ticker-label"><div class="ticker-live"></div>LIVE LOG</div>
+    <div class="ticker-track">
+      <span class="ticker-item"><span class="key">POST::</span><span class="val">AI Agents — loaded</span></span>
+      <span class="ticker-item"><span class="key">NEW RESOURCE::</span><span class="val">The 2026 Free AI Stack is now LIVE...</span></span>
+      <span class="ticker-item"><span class="key">STATUS::</span><span class="val">1,400+ Engineers accessed the RAG guide this week...</span></span>
+      <span class="ticker-item"><span class="key">SYSTEM::</span><span class="val">All agents nominal</span></span>
+      <span class="ticker-item"><span class="key">POST::</span><span class="val">AI Agents — loaded</span></span>
+      <span class="ticker-item"><span class="key">NEW RESOURCE::</span><span class="val">The 2026 Free AI Stack is now LIVE...</span></span>
+      <span class="ticker-item"><span class="key">STATUS::</span><span class="val">1,400+ Engineers accessed the RAG guide this week...</span></span>
+      <span class="ticker-item"><span class="key">SYSTEM::</span><span class="val">All agents nominal</span></span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
