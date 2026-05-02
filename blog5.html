@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="p:domain_verify" content="4beda6225cae4c435724e5589a33f61e"/>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The $0 AI Stack: 6 Tools That Replace a £50k Software Budget — The AI Architect</title>
+  <meta name="description" content="Perplexity, Cursor, Gamma, Claude, Leonardo, Phind — six completely free AI tools that are the exact stack used to run this site and build a real income from AI in 2026."/>
+  <meta name="author" content="The AI Architect"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+<style>
+  :root{--mint:#afffaf;--mint-dim:rgba(175,255,175,0.15);--mint-glow:rgba(175,255,175,0.4);--blue:#00BFFF;--blue-dim:rgba(0,191,255,0.15);--blue-glow:rgba(0,191,255,0.4);--purple:#c084fc;--purple-dim:rgba(192,132,252,0.15);--bg:#060a12;--glass:rgba(255,255,255,0.04);--glass-border:rgba(255,255,255,0.08);--text:#e8edf5;--text-dim:rgba(232,237,245,0.5);--text-mute:rgba(232,237,245,0.25);--mono:'JetBrains Mono',monospace;--sans:'Space Grotesk',sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
+  .bg-canvas{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;}
+  .bg-canvas::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 20% 10%,rgba(0,191,255,0.1) 0%,transparent 60%),radial-gradient(ellipse 60% 50% at 80% 20%,rgba(175,255,175,0.07) 0%,transparent 55%),radial-gradient(ellipse 50% 70% at 50% 90%,rgba(192,132,252,0.08) 0%,transparent 55%),linear-gradient(160deg,#060a12 0%,#080d1a 50%,#060a12 100%);}
+  .bg-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,191,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,191,255,0.02) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 90% 80% at 50% 40%,black 30%,transparent 80%);}
+  .scanlines{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.05) 3px,rgba(0,0,0,0.05) 4px);}
+  .wrapper{position:relative;z-index:1;max-width:780px;margin:0 auto;padding:40px 20px 120px;}
+  .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:50px;padding:12px 20px;background:var(--glass);border:1px solid var(--glass-border);border-radius:14px;backdrop-filter:blur(20px);animation:fadeDown 0.6s ease both;}
+  .topbar-left{display:flex;align-items:center;gap:10px;}
+  .topbar-dot{width:8px;height:8px;background:var(--mint);border-radius:50%;box-shadow:0 0 8px var(--mint-glow);animation:pulse-dot 2s ease-in-out infinite;}
+  .topbar-label{font-family:var(--mono);font-size:11px;color:var(--mint);letter-spacing:0.12em;text-transform:uppercase;}
+  .post-header{margin-bottom:48px;animation:fadeUp 0.8s ease 0.1s both;}
+  .post-tag-row{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+  .post-tag{font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;padding:4px 12px;border-radius:6px;background:var(--blue-dim);color:var(--blue);border:1px solid rgba(0,191,255,0.2);}
+  .post-read-time{font-family:var(--mono);font-size:10px;color:var(--text-mute);letter-spacing:0.08em;}
+  .post-title{font-size:clamp(24px,5vw,38px);font-weight:700;letter-spacing:-0.03em;line-height:1.2;margin-bottom:16px;background:linear-gradient(135deg,var(--text) 30%,var(--blue) 60%,var(--mint) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+  .post-subtitle{font-size:16px;color:var(--text-dim);line-height:1.7;max-width:620px;}
+  .post-divider{height:1px;background:var(--glass-border);margin:32px 0;}
+  .post-body{animation:fadeUp 0.8s ease 0.2s both;}
+  .post-body p{font-size:15px;color:var(--text-dim);line-height:1.85;margin-bottom:20px;}
+  .post-body h2{font-size:22px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin:40px 0 14px;}
+  .post-body h3{font-size:16px;font-weight:600;color:var(--text);letter-spacing:-0.01em;margin:28px 0 10px;}
+  .post-body ul{padding-left:20px;margin-bottom:20px;}
+  .post-body li{font-size:15px;color:var(--text-dim);line-height:1.8;margin-bottom:8px;}
+  .post-body strong{color:var(--text);font-weight:600;}
+  .post-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,191,255,0.3);}
+  .post-body a:hover{border-color:var(--blue);}
+  .callout{background:var(--glass);border:1px solid var(--glass-border);border-left:3px solid var(--blue);border-radius:12px;padding:20px 24px;margin:28px 0;}
+  .callout p{margin:0;font-size:14px;color:var(--text-dim);}
+  .callout strong{color:var(--blue);}
+
+  /* Tool profile cards */
+  .tool-profile{background:var(--glass);border:1px solid var(--glass-border);border-radius:18px;padding:28px;margin:24px 0;position:relative;overflow:hidden;transition:border-color 0.2s;}
+  .tool-profile-mint{border-left:3px solid var(--mint);}
+  .tool-profile-blue{border-left:3px solid var(--blue);}
+  .tool-profile-purple{border-left:3px solid var(--purple);}
+  .tool-profile:hover{border-color:rgba(0,191,255,0.2);}
+  .tool-profile-header{display:flex;align-items:center;gap:14px;margin-bottom:14px;}
+  .tool-emoji{font-size:28px;flex-shrink:0;}
+  .tool-name{font-size:18px;font-weight:700;letter-spacing:-0.01em;}
+  .tool-name-mint{color:var(--mint);}
+  .tool-name-blue{color:var(--blue);}
+  .tool-name-purple{color:var(--purple);}
+  .tool-verdict{font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;margin-top:2px;}
+  .verdict-mint{color:rgba(175,255,175,0.5);}
+  .verdict-blue{color:rgba(0,191,255,0.5);}
+  .verdict-purple{color:rgba(192,132,252,0.5);}
+  .tool-desc{font-size:14px;color:var(--text-dim);line-height:1.7;margin-bottom:14px;}
+  .tool-use-cases{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;}
+  .use-chip{font-family:var(--mono);font-size:10px;padding:3px 10px;border-radius:6px;border:1px solid var(--glass-border);color:var(--text-mute);letter-spacing:0.06em;}
+  .tool-link{font-family:var(--mono);font-size:11px;text-decoration:none;letter-spacing:0.08em;border-bottom:1px solid;padding-bottom:1px;}
+  .link-mint{color:var(--mint);border-color:rgba(175,255,175,0.3);}
+  .link-blue{color:var(--blue);border-color:rgba(0,191,255,0.3);}
+  .link-purple{color:var(--purple);border-color:rgba(192,132,252,0.3);}
+
+  .post-footer{margin-top:60px;padding-top:32px;border-top:1px solid var(--glass-border);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;}
+  .back-link{font-family:var(--mono);font-size:11px;color:var(--text-dim);text-decoration:none;letter-spacing:0.1em;transition:color 0.2s;}
+  .back-link:hover{color:var(--blue);}
+  .deploy-btn{display:inline-flex;align-items:center;gap:10px;padding:13px 28px;border-radius:12px;font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;transition:transform 0.2s ease,box-shadow 0.2s ease;}
+  .btn-mint{background:linear-gradient(135deg,rgba(175,255,175,0.2),rgba(175,255,175,0.1));color:var(--mint);border:1px solid rgba(175,255,175,0.35);box-shadow:0 4px 20px rgba(175,255,175,0.12);}
+  .btn-mint:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(175,255,175,0.25);}
+  .ticker-bar{position:fixed;bottom:0;left:0;right:0;z-index:100;background:rgba(6,10,18,0.92);border-top:1px solid var(--glass-border);backdrop-filter:blur(20px);padding:10px 0;overflow:hidden;}
+  .ticker-inner{display:flex;align-items:center;}
+  .ticker-label{flex-shrink:0;font-family:var(--mono);font-size:10px;color:var(--blue);letter-spacing:0.14em;text-transform:uppercase;padding:0 20px;border-right:1px solid var(--glass-border);margin-right:20px;display:flex;align-items:center;gap:8px;}
+  .ticker-live{width:6px;height:6px;background:var(--blue);border-radius:50%;box-shadow:0 0 6px var(--blue-glow);animation:pulse-dot 1.4s ease-in-out infinite;flex-shrink:0;}
+  .ticker-track{display:flex;align-items:center;white-space:nowrap;animation:ticker-scroll 40s linear infinite;}
+  .ticker-item{font-family:var(--mono);font-size:10px;color:var(--text-dim);letter-spacing:0.06em;padding:0 28px;border-right:1px solid rgba(255,255,255,0.05);}
+  .ticker-item .key{color:var(--blue);opacity:0.8;}
+  @keyframes ticker-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+  @keyframes fadeDown{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes pulse-dot{0%,100%{opacity:1;box-shadow:0 0 6px currentColor}50%{opacity:0.5;box-shadow:0 0 2px currentColor}}
+  @media(max-width:500px){.wrapper{padding:24px 14px 110px;}.post-title{font-size:22px;}.tool-profile{padding:20px 16px;}}
+</style>
+</head>
+<body>
+<div class="bg-canvas"><div class="bg-grid"></div><div class="scanlines"></div></div>
+<div class="wrapper">
+
+  <header class="topbar">
+    <div class="topbar-left"><div class="topbar-dot"></div><span class="topbar-label">STACK REVIEW</span></div>
+    <div style="display:flex;gap:16px;">
+      <a href="blog.html" style="font-family:var(--mono);font-size:10px;color:var(--text-dim);text-decoration:none;letter-spacing:0.1em;">← BLOG</a>
+      <a href="index.html" style="font-family:var(--mono);font-size:10px;color:var(--text-dim);text-decoration:none;letter-spacing:0.1em;">HOME</a>
+    </div>
+  </header>
+
+  <article>
+    <header class="post-header">
+      <div class="post-tag-row">
+        <span class="post-tag">Tools</span>
+        <span class="post-read-time">8 min read &nbsp;·&nbsp; May 2026</span>
+      </div>
+      <h1 class="post-title">The $0 AI Stack: 6 Tools That Replace a £50k Software Budget</h1>
+      <p class="post-subtitle">Perplexity, Cursor, Gamma, Claude, Leonardo, Phind — six tools that are completely free, professionally powerful, and the exact stack used to run this site and build a real income from AI.</p>
+      <div class="post-divider"></div>
+    </header>
+
+    <div class="post-body">
+
+      <p>Two years ago, building a professional AI-powered content and income operation required expensive subscriptions, a developer, and a design team. Today, a student with a laptop and a WiFi connection has access to tools that match or exceed that entire setup — for free.</p>
+
+      <p>This is a breakdown of the six tools in the AI Architect stack. Not tools I tested once and listed — tools used daily, in production, to research, write, code, visualise, and distribute content at scale.</p>
+
+      <div class="callout">
+        <p><strong>How to use this guide:</strong> Each tool profile below includes what it does, the exact use cases it covers in this stack, and a direct link. Read all six before deciding where to start — they work best as a system, not in isolation.</p>
+      </div>
+
+      <h2>The Stack</h2>
+
+      <!-- Tool 1 -->
+      <div class="tool-profile tool-profile-mint">
+        <div class="tool-profile-header">
+          <span class="tool-emoji">🔍</span>
+          <div>
+            <div class="tool-name tool-name-mint">Perplexity AI</div>
+            <div class="tool-verdict verdict-mint">// ROLE: Research Engine</div>
+          </div>
+        </div>
+        <p class="tool-desc">Perplexity is what Google should be. It doesn't just return links — it reads the top sources, synthesises the information, and delivers a structured answer with cited references you can verify. For anyone producing research-based content, it eliminates the most time-consuming part of the process.</p>
+        <p class="tool-desc">In this stack it handles all topic research, competitor analysis, niche discovery, and fact-checking. A 40-minute research session becomes a 4-minute Perplexity query with better source coverage.</p>
+        <div class="tool-use-cases">
+          <span class="use-chip">Content research</span>
+          <span class="use-chip">Fact-checking</span>
+          <span class="use-chip">Niche discovery</span>
+          <span class="use-chip">Literature review</span>
+          <span class="use-chip">Competitor analysis</span>
+        </div>
+        <a href="https://www.perplexity.ai" target="_blank" class="tool-link link-mint">Get Access → perplexity.ai</a>
+      </div>
+
+      <!-- Tool 2 -->
+      <div class="tool-profile tool-profile-blue">
+        <div class="tool-profile-header">
+          <span class="tool-emoji">⌨️</span>
+          <div>
+            <div class="tool-name tool-name-blue">Cursor Editor</div>
+            <div class="tool-verdict verdict-blue">// ROLE: Coding Without Coding</div>
+          </div>
+        </div>
+        <p class="tool-desc">Cursor is a code editor built around AI assistance. You describe what you want in plain English, and Cursor writes the code, runs it, reads any error messages, and fixes them — in a loop until it works. For automation scripts, data tools, and micro-applications, it removes the coding barrier entirely.</p>
+        <p class="tool-desc">In this stack it handles all custom automation scripts, data processing, and any client deliverables that require code. No prior programming knowledge required — just the ability to describe a problem clearly.</p>
+        <div class="tool-use-cases">
+          <span class="use-chip">Automation scripts</span>
+          <span class="use-chip">Data processing</span>
+          <span class="use-chip">Web scraping</span>
+          <span class="use-chip">API integrations</span>
+          <span class="use-chip">Custom tools</span>
+        </div>
+        <a href="https://www.cursor.com" target="_blank" class="tool-link link-blue">Get Access → cursor.com</a>
+      </div>
+
+      <!-- Tool 3 -->
+      <div class="tool-profile tool-profile-purple">
+        <div class="tool-profile-header">
+          <span class="tool-emoji">⚡</span>
+          <div>
+            <div class="tool-name tool-name-purple">Gamma App</div>
+            <div class="tool-verdict verdict-purple">// ROLE: Visual Content Engine</div>
+          </div>
+        </div>
+        <p class="tool-desc">Gamma takes text — notes, bullet points, a blog post URL — and turns it into a polished, professional presentation or visual document in under 60 seconds. The design quality is genuinely impressive, and the output is shareable and embeddable immediately.</p>
+        <p class="tool-desc">In this stack it handles all client-facing deliverables, social content (especially Pinterest), and the visual version of every blog post. It's the difference between a wall of text and something people actually share.</p>
+        <div class="tool-use-cases">
+          <span class="use-chip">Presentations</span>
+          <span class="use-chip">Pinterest visuals</span>
+          <span class="use-chip">Client decks</span>
+          <span class="use-chip">Report design</span>
+          <span class="use-chip">Content repurposing</span>
+        </div>
+        <a href="https://www.gamma.app" target="_blank" class="tool-link link-purple">Get Access → gamma.app</a>
+      </div>
+
+      <!-- Tool 4 -->
+      <div class="tool-profile tool-profile-blue">
+        <div class="tool-profile-header">
+          <span class="tool-emoji">🤖</span>
+          <div>
+            <div class="tool-name tool-name-blue">Claude 3.5</div>
+            <div class="tool-verdict verdict-blue">// ROLE: Primary AI Brain</div>
+          </div>
+        </div>
+        <p class="tool-desc">Claude is the primary writing, reasoning, and analysis engine in this stack. It produces longer, more coherent outputs than most alternatives, handles nuanced instructions exceptionally well, and is the best model available for producing content that doesn't read like it was AI-written.</p>
+        <p class="tool-desc">In this stack it handles all drafting, editing, summarising, extraction, and analysis tasks. It's the tool open in a browser tab every single day.</p>
+        <div class="tool-use-cases">
+          <span class="use-chip">Content drafting</span>
+          <span class="use-chip">Document analysis</span>
+          <span class="use-chip">Summarisation</span>
+          <span class="use-chip">Email drafting</span>
+          <span class="use-chip">Strategic thinking</span>
+        </div>
+        <a href="https://claude.ai" target="_blank" class="tool-link link-blue">Get Access → claude.ai</a>
+      </div>
+
+      <!-- Tool 5 -->
+      <div class="tool-profile tool-profile-mint">
+        <div class="tool-profile-header">
+          <span class="tool-emoji">🎨</span>
+          <div>
+            <div class="tool-name tool-name-mint">Leonardo AI</div>
+            <div class="tool-verdict verdict-mint">// ROLE: Visual Asset Generator</div>
+          </div>
+        </div>
+        <p class="tool-desc">Leonardo is a free AI image generation platform with a generous free tier and output quality that matches paid alternatives. For blog cover images, Pinterest graphics, social media assets, and content thumbnails, it eliminates the need for a designer or a stock photo subscription.</p>
+        <p class="tool-desc">In this stack it handles all custom imagery — header images, illustrations for posts, and Pinterest-optimised visuals that stand out in a feed.</p>
+        <div class="tool-use-cases">
+          <span class="use-chip">Blog images</span>
+          <span class="use-chip">Pinterest graphics</span>
+          <span class="use-chip">Social assets</span>
+          <span class="use-chip">Thumbnails</span>
+          <span class="use-chip">Brand visuals</span>
+        </div>
+        <a href="https://leonardo.ai" target="_blank" class="tool-link link-mint">Get Access → leonardo.ai</a>
+      </div>
+
+      <!-- Tool 6 -->
+      <div class="tool-profile tool-profile-blue">
+        <div class="tool-profile-header">
+          <span class="tool-emoji">🧠</span>
+          <div>
+            <div class="tool-name tool-name-blue">Phind</div>
+            <div class="tool-verdict verdict-blue">// ROLE: Technical Search Engine</div>
+          </div>
+        </div>
+        <p class="tool-desc">Phind is a search engine built specifically for technical and programming queries. Where Google returns Stack Overflow threads from 2014, Phind reads multiple current sources and gives you a direct, working answer. For anyone building with code — even using Cursor — it's the fastest way to solve technical problems.</p>
+        <p class="tool-desc">In this stack it handles all technical troubleshooting, code debugging questions, and implementation research when building automation workflows.</p>
+        <div class="tool-use-cases">
+          <span class="use-chip">Code debugging</span>
+          <span class="use-chip">Technical docs</span>
+          <span class="use-chip">API questions</span>
+          <span class="use-chip">Implementation help</span>
+        </div>
+        <a href="https://www.phind.com" target="_blank" class="tool-link link-blue">Get Access → phind.com</a>
+      </div>
+
+      <h2>How the Stack Works Together</h2>
+
+      <p>The power isn't in any individual tool — it's in the workflow they form together. Here's how a typical content piece moves through the stack:</p>
+
+      <ul>
+        <li><strong>Perplexity</strong> researches the topic and surfaces the key angles</li>
+        <li><strong>Claude</strong> drafts the post structure, then writes the full piece</li>
+        <li><strong>Gamma</strong> turns the post into a Pinterest-ready visual and a shareable deck</li>
+        <li><strong>Leonardo</strong> generates the cover image and any supporting visuals</li>
+        <li><strong>Cursor</strong> handles any custom scripts needed (scheduling, formatting, data)</li>
+        <li><strong>Phind</strong> solves any technical issues that arise along the way</li>
+      </ul>
+
+      <p>Total cost of this stack: £0. Total time from blank page to published post with visuals: under 30 minutes.</p>
+
+      <div class="callout">
+        <p><strong>Start with two:</strong> If you're new to this, don't try to use all six tools at once. Start with Perplexity and Claude. Get comfortable with that research-to-draft workflow. Add Gamma when you want to create social content. Build from there.</p>
+      </div>
+
+    </div>
+  </article>
+
+  <div class="post-footer">
+    <a href="blog.html" class="back-link">← Back to All Posts</a>
+    <a href="index.html" class="deploy-btn btn-mint">Get The Full Stack →</a>
+  </div>
+
+  <p style="font-family:var(--mono);font-size:10px;color:var(--text-mute);margin-top:32px;letter-spacing:0.08em;">
+    Affiliate Disclosure: Some links in this post are affiliate links. I may earn a commission if you sign up — at no cost to you. I only recommend tools I personally use and test in production.
+  </p>
+
+</div>
+
+<div class="ticker-bar">
+  <div class="ticker-inner">
+    <div class="ticker-label"><div class="ticker-live"></div>LIVE LOG</div>
+    <div class="ticker-track">
+      <span class="ticker-item"><span class="key">POST::</span><span class="val">$0 AI Stack — loaded</span></span>
+      <span class="ticker-item"><span class="key">NEW RESOURCE::</span><span class="val">The 2026 Free AI Stack is now LIVE...</span></span>
+      <span class="ticker-item"><span class="key">STATUS::</span><span class="val">1,400+ Engineers accessed the RAG guide this week...</span></span>
+      <span class="ticker-item"><span class="key">SYSTEM::</span><span class="val">All agents nominal</span></span>
+      <span class="ticker-item"><span class="key">POST::</span><span class="val">$0 AI Stack — loaded</span></span>
+      <span class="ticker-item"><span class="key">NEW RESOURCE::</span><span class="val">The 2026 Free AI Stack is now LIVE...</span></span>
+      <span class="ticker-item"><span class="key">STATUS::</span><span class="val">1,400+ Engineers accessed the RAG guide this week...</span></span>
+      <span class="ticker-item"><span class="key">SYSTEM::</span><span class="val">All agents nominal</span></span>
+    </div>
+  </div>
+</div>
+</body>
+</html>
